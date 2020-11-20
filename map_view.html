@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Parking simulation</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--<link rel="stylesheet" type="text/css" href="style.css">-->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+	integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+	crossorigin=""/>
+	<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+	   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+	   crossorigin=""></script>
+	   
+	
+</head>
+<body>
+	<h1>Welcome! Please choose your action below!</h1>
+	<div id="page" style="width:1200px; height: 500px; display: flex;">
+		<div id="mapid" style="width:800px; height: 500px; "></div>
+		
+		<div id="form" style="float:right; text-align:center;">
+
+			<h3>Go back!</h3>
+			<button class="actionbtn" onclick="location.href='admin.html';">Back!</button>
+
+		</div>
+		
+	</div>
+	
+	
+	<script>
+	var mymap = L.map('mapid').setView([40.64318383292396, 22.934352730985893], 13);
+	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+	maxZoom: 18,
+	id: 'mapbox.streets',
+	accessToken: 'pk.eyJ1IjoidG9tYXRva2FnaWFuYXMiLCJhIjoiY2swc2ZjYnc4MDF6YTNucDU1bXgwZDdkbCJ9.skOGqzIaVJ_Dipq6qqEHbg'
+}).addTo(mymap);
+
+
+
+function reqListener () {
+      console.log(this.responseText);
+    }
+
+	var obj;
+
+    var oReq = new XMLHttpRequest(); // New request object
+	
+    oReq.onload = function() {
+        // This is where you handle what to do with the response.
+        // The actual data is found on this.responseText
+       // alert(this.responseText); // Will alert: 42
+		obj = JSON.parse(this.responseText);
+	
+	
+		var strBuilder = [];
+		for(key in obj){
+			var str;
+			var fin = [];
+			str = JSON.parse(JSON.stringify(obj[key]["coordinates"]))  + "\n";
+			strBuilder.push(str.replace(/\(/g, '').replace(/\)/g, ''));
+			var arr = [];
+			var temp = [];
+			arr=strBuilder[key].split(', ');
+			var i;
+			for (i = 0; i < arr.length; i++) {
+			    temp = arr[i].split(',');
+				fin.push(temp);
+			}		
+			var t = +key + 1;
+
+			polygon = L.polygon(fin,  {color: 'gray'}).bindPopup('<iframe id=ifr src="./popup_form.html?id='+ t + '"></iframe>').addTo(mymap);
+			
+		}
+    };
+
+
+
+
+	
+    oReq.open("get", "polygon_coords.php", true);
+    //                               ^ Don't block the rest of the execution.
+    //                                 Don't wait until the request finishes to
+    //                                 continue.
+    oReq.send();
+	
+	
+	
+
+	
+
+	</script>
+</body>
+</html>

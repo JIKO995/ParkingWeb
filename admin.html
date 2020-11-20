@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Parking simulation</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<h1>Welcome! Please choose your action below!</h1>
+	<div class="row">
+		<div class="column">
+			<h2>Database management</h2>
+			<h3>Load data</h3>
+			<button class="actionbtn" onclick="ins_confirm()">Load!</button>
+			<h3>Delete data</h3>
+			<button class="actionbtn" onclick="del_confirm()">Delete!</button>
+		</div>
+		<div class="column">
+			<h2>City view</h2>
+			<h3>Manage polygons</h3>
+			<button class="actionbtn" onclick="location.href='map_view.html';">Manage!</button>
+			<h3>Simulation</h3>
+			<button class="actionbtn" onclick="location.href='new_map.html';">Simulate!</button>
+		</div>
+		<div class="column">
+			<h2>Log out</h2>
+			<button class="actionbtn" onclick="location.href='index.html';">Log out!</button>
+		</div>
+	</div>
+	
+	<script>
+		function del_confirm() {
+		  if (confirm("Are you sure you want to delete the city data?")) {
+			location.href='data_deletion.php';
+		  } else {
+			txt = "You pressed Cancel!";
+		  }
+		}
+		
+		function ins_confirm() {
+			location.href='insert_kml.php';
+		}
+	</script>
+</body>
+</html>

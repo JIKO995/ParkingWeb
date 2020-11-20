@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Parking simulation</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<h1>Welcome to the parking simulator!</h1>
+	<div class="row">
+		<div class="column">
+			<h2>Are you an admin? Log in here!</h2>
+				<form action="connect.php" method="post">
+
+				<div class="container">
+					<label><b>Username</b></label><br>
+					<input type="text" placeholder="Enter Username" name="username" required>
+				</div>
+				<div class="container">
+					<label><b>Password</b></label><br>
+					<input type="password" placeholder="Enter Password" name="password" required>
+				</div>
+				<div class="container">
+					<button class="loginbtn" type="submit">Login</button>
+				</div>
+				</form>
+		</div>
+		<div class="column">
+			<h2>Are you a user? Click below to start!</h2>
+			<button class="startbtn" onclick="location.href='user.html';">Start!</button>
+		</div>
+	</div>
+</body>
+</html>
